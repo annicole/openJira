@@ -1,20 +1,20 @@
-import { EntriesState } from './';
+import { Entry } from "../../interfaces";
+import { EntriesState } from "./";
 
+type EntriesActionType = { type: "[Entries] Add-Entry"; payload: Entry };
 
-type EntriesActionType = 
-   | { type: '[Entries] - ActionName' } 
+export const entriesReducer = (
+  state: EntriesState,
+  action: EntriesActionType
+): EntriesState => {
+  switch (action.type) {
+    case "[Entries] Add-Entry":
+      return {
+        ...state,
+        entries: [...state.entries,action.payload]
+      };
 
-
-export const entriesReducer = ( state: EntriesState, action: EntriesActionType ): EntriesState => {
-
-   switch (action.type) {
-     /* case '[Entries] - ActionName':
-         return {
-            ...state,
-          }
-*/
-       default:
-          return state;
-   }
-
-}
+    default:
+      return state;
+  }
+};
