@@ -1,22 +1,28 @@
-import { MenuOutlined } from "@mui/icons-material";
-import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
-import { FC, useContext } from "react";
-import { UIContext } from "../../context/ui/UIContext";
+import { useContext } from 'react';
 
-interface NavbarProps {}
+import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
+import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 
-const Navbar: FC<NavbarProps> = () => {
-  const {openSideMenu} = useContext(UIContext);
+import { UIContext } from '../../context/ui';
+
+export const Navbar = () => {
+
+  const { openSideMenu } = useContext( UIContext );
+
+
   return (
-    <AppBar position="sticky" elevation={0}>
-      <Toolbar>
-        <IconButton size="large" edge="start">
-          <MenuOutlined />
-        </IconButton>
-        <Typography variant="h6">Open Jira</Typography>
-      </Toolbar>
-    </AppBar>
-  );
-};
+      <AppBar position='sticky'>
+          <Toolbar>
+              <IconButton 
+                size='large'
+                edge="start"
+                onClick={ openSideMenu }
+              >
+                  <MenuOutlinedIcon />
+              </IconButton>
 
-export default Navbar;
+              <Typography variant='h6'>OpenJira</Typography>
+          </Toolbar>
+      </AppBar>
+  )
+};
