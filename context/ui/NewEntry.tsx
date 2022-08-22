@@ -3,13 +3,14 @@ import React, { ChangeEvent, useContext, useState } from "react";
 import SaveOutlinedIcon from "@mui/icons-material/SaveAltOutlined";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { EntriesContext } from "../entries";
+import { UIContext } from "./UIContext";
 
 export const NewEntry = () => {
-  const [isAdding, setIsAdding] = useState(false);
   const [inputValue, setinputValue] = useState("");
   const [touched, setTouched] = useState(false);
 
   const { addEntry } = useContext(EntriesContext);
+  const {isAdding,setIsAddingEntry} =useContext(UIContext);
 
   const onTextChanges = (event: ChangeEvent<HTMLInputElement>) => {
     setinputValue(event.target.value);
@@ -18,8 +19,10 @@ export const NewEntry = () => {
   const onSave = () => {
 
     if(inputValue.length === 0) return;
-
     addEntry(inputValue)
+    setIsAddingEntry(false)
+    setTouched(false)
+    setinputValue('')
   };
 
   return (
@@ -40,7 +43,7 @@ export const NewEntry = () => {
             onBlur={() => setTouched(true)}
           />
           <Box display="flex" justifyContent="space-between">
-            <Button variant="text" onClick={() => setIsAdding(false)}>
+            <Button variant="text" onClick={() => setIsAddingEntry(false)}>
               Cancelar
             </Button>
             <Button
@@ -57,7 +60,7 @@ export const NewEntry = () => {
           startIcon={<AddCircleOutlineIcon />}
           fullWidth
           variant="outlined"
-          onClick={() => setIsAdding(true)}
+          onClick={() => setIsAddingEntry(true)}
         ></Button>
       )}
     </Box>

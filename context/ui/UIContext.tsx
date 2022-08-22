@@ -1,13 +1,16 @@
-import { createContext } from 'react';
-
+import { createContext } from "react";
 
 interface ContextProps {
-    sidemenuOpen: boolean;
+  sidemenuOpen: boolean;
+  isAdding: boolean;
+  isDragging:boolean;
 
-    // Methods
-    closeSideMenu: () => void;
-    openSideMenu: () => void;
+  // Methods
+  closeSideMenu: () => void;
+  openSideMenu: () => void;
+  setIsAddingEntry: (boisAdding: boolean) => void;
+  startDragging: () => void;
+  endDragging: () => void;
 }
 
-
-export const UIContext = createContext({} as ContextProps );
+export const UIContext = createContext({} as ContextProps);
