@@ -18,3 +18,7 @@ mongodb://localhost:2701/entriesdb
 ## Configurar las variables de entorno
 Renombrar el archiv _.env.template a _.env_
 
+## Llamar la base de datos con informacion de pruebas
+
+Llamara:
+```http://localhost:3000/api/seed``
