@@ -3,7 +3,8 @@ import { EntriesState } from "./";
 
 type EntriesActionType =
   | { type: "[Entries] Add-Entry"; payload: Entry }
-  | { type: "[Entries] ENTRY-Updated"; payload: Entry };
+  | { type: "[Entries] ENTRY-Updated"; payload: Entry }
+  | { type: "[Entries] REFRESH-DATA"; payload: Entry[] };
 
 export const entriesReducer = (
   state: EntriesState,
@@ -19,13 +20,19 @@ export const entriesReducer = (
     case "[Entries] ENTRY-Updated":
       return {
         ...state,
-        entries: state.entries.map(entry=>{
-          if(entry._id === action.payload._id){
+        entries: state.entries.map((entry) => {
+          if (entry._id === action.payload._id) {
             entry.status = action.payload.status;
             entry.description = action.payload.description;
           }
           return entry;
-        })
+        }),
+      };
+
+    case "[Entries] REFRESH-DATA":
+      return {
+        ...state,
+        entries: [...action.payload],
       };
 
     default:
