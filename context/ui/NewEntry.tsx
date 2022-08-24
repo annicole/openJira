@@ -10,19 +10,18 @@ export const NewEntry = () => {
   const [touched, setTouched] = useState(false);
 
   const { addEntry } = useContext(EntriesContext);
-  const {isAdding,setIsAddingEntry} =useContext(UIContext);
+  const { isAdding, setIsAddingEntry } = useContext(UIContext);
 
   const onTextChanges = (event: ChangeEvent<HTMLInputElement>) => {
     setinputValue(event.target.value);
   };
 
   const onSave = () => {
-
-    if(inputValue.length === 0) return;
-    addEntry(inputValue)
-    setIsAddingEntry(false)
-    setTouched(false)
-    setinputValue('')
+    if (inputValue.length === 0) return;
+    addEntry(inputValue);
+    setIsAddingEntry(false);
+    setTouched(false);
+    setinputValue("");
   };
 
   return (
@@ -50,6 +49,7 @@ export const NewEntry = () => {
               variant="outlined"
               color="secondary"
               endIcon={<SaveOutlinedIcon />}
+              onClick={onSave}
             >
               Guardar
             </Button>
