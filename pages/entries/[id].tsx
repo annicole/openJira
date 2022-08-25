@@ -18,9 +18,11 @@ import { Layout } from "../../components/layouts";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { Entry, EntryStatus } from "../../interfaces";
-import { ChangeEvent, FC, useMemo, useState } from "react";
+import { ChangeEvent, FC, useMemo, useState,useContext } from "react";
 import { GetServerSideProps } from "next";
 import { dbEntries } from "../../database";
+import { EntriesContext } from "../../context/entries";
+import { dateFunctions } from "../../utils";
 
 const validStatus: EntryStatus[] = ["pending", "in-progres", "finished"];
 
@@ -29,6 +31,10 @@ interface Props {
 }
 
 export const EntryPage: FC<Props> = ({ entry }) => {
+
+
+  const {updateEntry} = useContext(EntriesContext);
+
   const [inputValue, setInputValue] = useState(entry.description);
   const [status, setStatus] = useState<EntryStatus>(entry.status);
   const [touched, setTouched] = useState(false);
@@ -41,7 +47,16 @@ export const EntryPage: FC<Props> = ({ entry }) => {
     setStatus(event.target.value as EntryStatus);
   };
 
-  const onSave = () => {};
+  const onSave = () => {
+    if(inputValue.trim().length === 0) return;
+    const updatedEntry: Entry ={
+      ...entry,
+      status,
+      description:inputValue
+    }
+    updateEntry(updatedEntry);
+
+  };
 
   const isNotValid = useMemo(
     () => inputValue.length <= 0 && touched,
@@ -55,7 +70,7 @@ export const EntryPage: FC<Props> = ({ entry }) => {
           <Card>
             <CardHeader 
             title="Entrada" 
-            subheader={"Creado hace ..."} />
+            subheader={`Creada  ${dateFunctions.getFormatDistanceNow(entry.createdAt)}`} />
             <CardContent>
               <TextField
                 sx={{ marginTop: 2, marginBottom: 1 }}
